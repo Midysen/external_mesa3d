@@ -28,7 +28,7 @@
 #define __gen_address_type uint32_t
 #define __gen_address_offset(reloc) (*reloc)
 #define __gen_emit_reloc(cl, reloc)
-#include "cle/v3d_packet_v41_pack.h"
+#include "broadcom/cle/v3d_packet_v41_pack.h"
 
 static void
 vir_TMU_WRITE(struct v3d_compile *c, enum v3d_qpu_waddr waddr, struct qreg val,

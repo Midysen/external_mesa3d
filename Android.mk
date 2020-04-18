@@ -62,6 +62,7 @@ gallium_drivers := \
 	radeonsi.HAVE_GALLIUM_RADEONSI \
 	vmwgfx.HAVE_GALLIUM_VMWGFX \
 	vc4.HAVE_GALLIUM_VC4 \
+	v3d.HAVE_GALLIUM_V3D \
 	virgl.HAVE_GALLIUM_VIRGL \
 	etnaviv.HAVE_GALLIUM_ETNAVIV \
 	iris.HAVE_GALLIUM_IRIS \

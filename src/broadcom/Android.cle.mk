@@ -25,15 +25,43 @@ LOCAL_MODULE := libmesa_broadcom_cle
 
 LOCAL_MODULE_CLASS := STATIC_LIBRARIES
 
-LOCAL_SRC_FILES := $(BROADCOM_DECODER_FILES)
+LOCAL_SRC_FILES := $(BROADCOM_DECODER_FILES) \
+        $(BROADCOM_FILES)
 
-LOCAL_STATIC_LIBRARIES := libmesa_broadcom_genxml
+LOCAL_STATIC_LIBRARIES := libmesa_broadcom_genxml \
+        libmesa_nir
 
-LOCAL_C_INCLUDES += $(MESA_TOP)/src/gallium/include
+LOCAL_WHOLE_STATIC_LIBRARIES := \
+        libmesa_broadcom_v33 \
+        libmesa_broadcom_v41
+
+LOCAL_C_INCLUDES += $(MESA_TOP)/src/gallium/include \
+        $(MESA_TOP)/src/gallium/auxiliary
 
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)
 
 LOCAL_SHARED_LIBRARIES := libexpat libz
 
+include $(MESA_COMMON_MK)
+include $(BUILD_STATIC_LIBRARY)
+
+
+include $(CLEAR_VARS)
+LOCAL_MODULE_CLASS := STATIC_LIBRARIES
+LOCAL_SRC_FILES := $(BROADCOM_PER_VERSION_SOURCES)
+LOCAL_STATIC_LIBRARIES := libmesa_broadcom_genxml
+LOCAL_C_INCLUDES += $(MESA_TOP)/src/gallium/include
+LOCAL_MODULE := libmesa_broadcom_v33
+LOCAL_CFLAGS += -DV3D_VERSION=33
+include $(MESA_COMMON_MK)
+include $(BUILD_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE_CLASS := STATIC_LIBRARIES
+LOCAL_SRC_FILES := $(BROADCOM_PER_VERSION_SOURCES)
+LOCAL_STATIC_LIBRARIES := libmesa_broadcom_genxml
+LOCAL_C_INCLUDES += $(MESA_TOP)/src/gallium/include
+LOCAL_MODULE := libmesa_broadcom_v41
+LOCAL_CFLAGS += -DV3D_VERSION=41
 include $(MESA_COMMON_MK)
 include $(BUILD_STATIC_LIBRARY)

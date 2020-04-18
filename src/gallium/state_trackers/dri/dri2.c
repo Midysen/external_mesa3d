@@ -548,7 +548,7 @@ dri2_allocate_textures(struct dri_context *ctx,
          whandle.stride = buf->pitch;
          whandle.offset = 0;
          whandle.format = format;
-         whandle.modifier = DRM_FORMAT_MOD_INVALID;
+         whandle.modifier = DRM_FORMAT_MOD_LINEAR;
          if (screen->can_share_buffer)
             whandle.type = WINSYS_HANDLE_TYPE_SHARED;
          else
@@ -821,7 +821,7 @@ dri2_create_image_from_name(__DRIscreen *_screen,
    whandle.type = WINSYS_HANDLE_TYPE_SHARED;
    whandle.handle = name;
    whandle.format = map->pipe_format;
-   whandle.modifier = DRM_FORMAT_MOD_INVALID;
+   whandle.modifier = DRM_FORMAT_MOD_LINEAR;
 
    whandle.stride = pitch * util_format_get_blocksize(map->pipe_format);
 
@@ -1020,8 +1020,9 @@ dri2_create_image(__DRIscreen *_screen,
                    int width, int height, int format,
                    unsigned int use, void *loaderPrivate)
 {
+	const uint64_t mod = DRM_FORMAT_MOD_LINEAR;
    return dri2_create_image_common(_screen, width, height, format, use,
-                                   NULL /* modifiers */, 0 /* count */,
+                                   &mod, 1,
                                    loaderPrivate);
 }
 
@@ -1100,7 +1101,7 @@ dri2_query_image_by_resource_handle(__DRIimage *image, int attrib, int *value)
    case __DRI_IMAGE_ATTRIB_MODIFIER_UPPER:
    case __DRI_IMAGE_ATTRIB_MODIFIER_LOWER:
       whandle.type = WINSYS_HANDLE_TYPE_KMS;
-      whandle.modifier = DRM_FORMAT_MOD_INVALID;
+      whandle.modifier = DRM_FORMAT_MOD_LINEAR;
       break;
    default:
       return false;
@@ -1313,7 +1314,7 @@ dri2_from_names(__DRIscreen *screen, int width, int height, int format,
    whandle.stride = strides[0];
    whandle.offset = offsets[0];
    whandle.format = map->pipe_format;
-   whandle.modifier = DRM_FORMAT_MOD_INVALID;
+   whandle.modifier = DRM_FORMAT_MOD_LINEAR;
 
    img = dri2_create_image_from_winsys(screen, width, height, map,
                                        1, &whandle, loaderPrivate);
@@ -1372,7 +1373,7 @@ dri2_from_fds(__DRIscreen *screen, int width, int height, int fourcc,
               void *loaderPrivate)
 {
    return dri2_create_image_from_fd(screen, width, height, fourcc,
-                                   DRM_FORMAT_MOD_INVALID, fds, num_fds,
+                                   DRM_FORMAT_MOD_LINEAR, fds, num_fds,
                                    strides, offsets, NULL, loaderPrivate);
 }
 
@@ -1444,7 +1445,7 @@ dri2_from_dma_bufs(__DRIscreen *screen,
    __DRIimage *img;
 
    img = dri2_create_image_from_fd(screen, width, height, fourcc,
-                                   DRM_FORMAT_MOD_INVALID, fds, num_fds,
+                                   DRM_FORMAT_MOD_LINEAR, fds, num_fds,
                                    strides, offsets, error, loaderPrivate);
    if (img == NULL)
       return NULL;
