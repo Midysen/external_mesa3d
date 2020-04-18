@@ -32,6 +32,9 @@ LOCAL_SRC_FILES := target.c
 
 LOCAL_CFLAGS :=
 
+LOCAL_C_INCLUDES += \
+	$(MESA_TOP)/prebuilt-intermediates
+
 # We need --undefined-version as some functions in dri.sym may be missing
 # depending on which drivers are enabled or not. Otherwise, we get the error:
 # "version script assignment of  to symbol FOO failed: symbol not defined"
