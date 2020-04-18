@@ -29,6 +29,9 @@
 # The main target is libGLES_mesa.  For each classic driver enabled, a DRI
 # module will also be built.  DRI modules will be loaded by libGLES_mesa.
 
+ifneq ($(BOARD_USE_CUSTOMIZED_MESA), true)
+ifneq ($(BOARD_GPU_DRIVERS),)
+
 MESA_TOP := $(call my-dir)
 
 MESA_ANDROID_MAJOR_VERSION := $(word 1, $(subst ., , $(PLATFORM_VERSION)))
@@ -117,3 +120,6 @@ SUBDIRS := \
 INC_DIRS := $(call all-named-subdir-makefiles,$(SUBDIRS))
 INC_DIRS += $(call all-named-subdir-makefiles,src/gallium)
 include $(INC_DIRS)
+
+endif # BOARD_GPU_DRIVERS != ""
+endif # BOARD_USE_CUSTOMIZED_MESA != true

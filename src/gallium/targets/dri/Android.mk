@@ -60,12 +60,7 @@ LOCAL_STATIC_LIBRARIES += \
 	libfreedreno_ir3 \
 	libfreedreno_perfcntrs \
 	libmesa_gallium \
-	libpanfrost_bifrost \
-	libpanfrost_decode \
-	libpanfrost_encoder \
-	libpanfrost_midgard \
-	libpanfrost_shared \
-	libpanfrost_util \
+	libpanfrost_shared
 
 ifeq ($(USE_LIBBACKTRACE),true)
 	LOCAL_SHARED_LIBRARIES += libbacktrace
